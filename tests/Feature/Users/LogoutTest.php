@@ -22,7 +22,7 @@ class LogoutTest extends TestCase
         $token = JWTAuth::fromUser($user);
 
         $response = $this
-                        ->withHeaders(['Authorization' => 'Bearer ' . $token])
+                        ->withHeader('Authorization', 'Bearer ' . $token)
                         ->json('DELETE', '/api/logout');
 
         $response
