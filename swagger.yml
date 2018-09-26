@@ -1,0 +1,560 @@
+swagger: '2.0'
+info:
+  description: |
+    Sistema de administración de servicios construido en PHP
+    con el framework Laravel
+  version: 1.0.0
+  title: Services Laravel
+  contact:
+    email: eparialhuay@gmail.com
+host: localhost:8000
+basePath: /api
+
+tags:
+- name: users
+  description: Módulo para gestión de usuarios
+- name: employees
+  description: Módulo para gestión de empleados
+- name: people
+  description: Módulo para gestión de personas
+- name: customers
+  description: Módulo para gestión de clientes
+- name: services
+  description: Módulo para gestión de servicios
+
+schemes:
+- http
+
+paths:
+  /login:
+    post:
+      tags:
+      - users
+      summary: Autenticación de usuario
+      produces:
+      - application/json
+      parameters:
+      - name: username
+        in: query
+        type: string
+        description: Username del usuario
+        required: true
+      - name: password
+        in: query
+        type: string
+        description: Contraseña del usuario
+        required: true
+      responses:
+        200:
+          description: Usuario autenticado satisfactoriamente
+        422:
+          description: Credenciales inválidas
+  /logout:
+    delete:
+      tags:
+      - users
+      summary: Invalidar autenticación del usuario
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Token invalidado satisfactoriamente
+        401:
+          description: Autenticación inválida
+      security:
+      - Authorization: []
+  /user:
+    get:
+      tags:
+      - users
+      summary: Obtener datos del usuario autenticado
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Datos del usuario
+        401:
+          description: Autenticación inválida
+      security:
+      - Authorization: []
+  /users:
+    get:
+      tags:
+      - users
+      summary: Obtener el listado de usuarios
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Listado de usuarios
+        401:
+          description: Autenticación inválida
+      security:
+      - Authorization: []
+    post:
+      tags:
+      - users
+      summary: Crear un nuevo usuario
+      produces:
+      - application/json
+      responses:
+        201:
+          description: Datos del nuevo usuario
+        401:
+          description: Autenticación inválida
+        422:
+          description: Errores de validación
+      security:
+      - Authorization: []
+  /users/{userid}:
+    get:
+      tags:
+      - users
+      summary: Obtener los datos de un usuario en específico por su ID
+      produces:
+      - application/json
+      parameters:
+      - name: userid
+        in: path
+        type: integer
+        description: ID del usuario
+        required: true
+      responses:
+        200:
+          description: Datos del usuario
+        401:
+          description: Autenticación inválida
+        404:
+          description: Usuario no encontrado
+      security:
+      - Authorization: []
+    put:
+      tags:
+      - users
+      summary: Editar los datos del usuario
+      produces:
+      - application/json
+      parameters:
+      - name: userid
+        in: path
+        type: integer
+        description: ID del usuario
+        required: true
+      responses:
+        200:
+          description: Datos del usuario editado
+        401:
+          description: Autenticación inválida
+        404:
+          description: Usuario no encontrado
+        422:
+          description: Errores de validación
+      security:
+      - Authorization: []
+    delete:
+      tags:
+      - users
+      summary: Eliminar usuario
+      produces:
+      - application/json
+      parameters:
+      - name: userid
+        in: path
+        type: integer
+        description: ID del usuario
+        required: true
+      responses:
+        200:
+          description: Usuario eliminado
+        401:
+          description: Autenticación inválida
+        404:
+          description: Usuario no encontrado
+      security:
+      - Authorization: []
+  /employees:
+    get:
+      tags:
+      - employees
+      summary: Obtener el listado de empleados
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Listado de empleados
+        401:
+          description: Autenticación inválida
+      security:
+      - Authorization: []
+    post:
+      tags:
+      - employees
+      summary: Crear un nuevo empleado
+      produces:
+      - application/json
+      responses:
+        201:
+          description: Datos del nuevo empleado
+        401:
+          description: Autenticación inválida
+        422:
+          description: Errores de validación
+      security:
+      - Authorization: []
+  /employees/{employeeid}:
+    get:
+      tags:
+      - employees
+      summary: Obtener los datos de un empleado en específico por su ID
+      produces:
+      - application/json
+      parameters:
+      - name: employeeid
+        in: path
+        type: integer
+        description: ID del empleado
+        required: true
+      responses:
+        200:
+          description: Datos del empleado
+        401:
+          description: Autenticación inválida
+        404:
+          description: Empleado no encontrado
+      security:
+      - Authorization: []
+    put:
+      tags:
+      - employees
+      summary: Editar los datos del usuario
+      produces:
+      - application/json
+      parameters:
+      - name: employeeid
+        in: path
+        type: integer
+        description: ID del empleado
+        required: true
+      responses:
+        200:
+          description: Datos del empleado editado
+        401:
+          description: Autenticación inválida
+        404:
+          description: Empleado no encontrado
+        422:
+          description: Errores de validación
+      security:
+      - Authorization: []
+    delete:
+      tags:
+      - employees
+      summary: Eliminar empleado
+      produces:
+      - application/json
+      parameters:
+      - name: employeeid
+        in: path
+        type: integer
+        description: ID del empleado
+        required: true
+      responses:
+        200:
+          description: Empleado eliminado
+        401:
+          description: Autenticación inválida
+        404:
+          description: Empleado no encontrado
+      security:
+      - Authorization: []
+  /people:
+    get:
+      tags:
+      - people
+      summary: Obtener el listado de personas
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Listado de personas
+        401:
+          description: Autenticación inválida
+      security:
+      - Authorization: []
+    post:
+      tags:
+      - people
+      summary: Crear una nueva persona
+      produces:
+      - application/json
+      responses:
+        201:
+          description: Datos de la nueva persona
+        401:
+          description: Autenticación inválida
+        422:
+          description: Errores de validación
+      security:
+      - Authorization: []
+  /people/{personid}:
+    get:
+      tags:
+      - people
+      summary: Obtener los datos de una persona en específico por su ID
+      produces:
+      - application/json
+      parameters:
+      - name: personid
+        in: path
+        type: integer
+        description: ID de la persona
+        required: true
+      responses:
+        200:
+          description: Datos de una persona
+        401:
+          description: Autenticación inválida
+        404:
+          description: Persona no encontrada
+      security:
+      - Authorization: []
+    put:
+      tags:
+      - people
+      summary: Editar los datos de una persona
+      produces:
+      - application/json
+      parameters:
+      - name: personid
+        in: path
+        type: integer
+        description: ID de la persona
+        required: true
+      responses:
+        200:
+          description: Datos de la persona editada
+        401:
+          description: Autenticación inválida
+        404:
+          description: Persona no encontrada
+        422:
+          description: Errores de validación
+      security:
+      - Authorization: []
+    delete:
+      tags:
+      - people
+      summary: Eliminar persona
+      produces:
+      - application/json
+      parameters:
+      - name: personid
+        in: path
+        type: integer
+        description: ID de la persona
+        required: true
+      responses:
+        200:
+          description: Persona eliminada
+        401:
+          description: Autenticación inválida
+        404:
+          description: Persona no encontrada
+      security:
+      - Authorization: []
+  /customers:
+    get:
+      tags:
+      - customers
+      summary: Obtener el listado de clientes
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Listado de clientes
+        401:
+          description: Autenticación inválida
+      security:
+      - Authorization: []
+    post:
+      tags:
+      - customers
+      summary: Crear un nuevo cliente
+      produces:
+      - application/json
+      responses:
+        201:
+          description: Datos del nuevo cliente
+        401:
+          description: Autenticación inválida
+        422:
+          description: Errores de validación
+      security:
+      - Authorization: []
+  /customers/{customerid}:
+    get:
+      tags:
+      - customers
+      summary: Obtener los datos de un cliente en específico por su ID
+      produces:
+      - application/json
+      parameters:
+      - name: customerid
+        in: path
+        type: integer
+        description: ID del cliente
+        required: true
+      responses:
+        200:
+          description: Datos de un cliente
+        401:
+          description: Autenticación inválida
+        404:
+          description: Cliente no encontrado
+      security:
+      - Authorization: []
+    put:
+      tags:
+      - customers
+      summary: Editar los datos de un cliente
+      produces:
+      - application/json
+      parameters:
+      - name: customerid
+        in: path
+        type: integer
+        description: ID del cliente
+        required: true
+      responses:
+        200:
+          description: Datos del cliente editado
+        401:
+          description: Autenticación inválida
+        404:
+          description: Cliente no encontrado
+        422:
+          description: Errores de validación
+      security:
+      - Authorization: []
+    delete:
+      tags:
+      - customers
+      summary: Eliminar cliente
+      produces:
+      - application/json
+      parameters:
+      - name: customerid
+        in: path
+        type: integer
+        description: ID del cliente
+        required: true
+      responses:
+        200:
+          description: Cliente eliminado
+        401:
+          description: Autenticación inválida
+        404:
+          description: Cliente no encontrado
+      security:
+      - Authorization: []
+  /services:
+    get:
+      tags:
+      - services
+      summary: Obtener el listado de servicios
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Listado de servicios
+        401:
+          description: Autenticación inválida
+      security:
+      - Authorization: []
+    post:
+      tags:
+      - services
+      summary: Crear un nuevo servicio
+      produces:
+      - application/json
+      responses:
+        201:
+          description: Datos del nuevo servicio
+        401:
+          description: Autenticación inválida
+        422:
+          description: Errores de validación
+      security:
+      - Authorization: []
+  /services/{serviceid}:
+    get:
+      tags:
+      - services
+      summary: Obtener los datos de un servicio en específico por su ID
+      produces:
+      - application/json
+      parameters:
+      - name: serviceid
+        in: path
+        type: integer
+        description: ID del servicio
+        required: true
+      responses:
+        200:
+          description: Datos de un servicio
+        401:
+          description: Autenticación inválida
+        404:
+          description: Servicio no encontrado
+      security:
+      - Authorization: []
+    put:
+      tags:
+      - services
+      summary: Editar los datos de un servicio
+      produces:
+      - application/json
+      parameters:
+      - name: serviceid
+        in: path
+        type: integer
+        description: ID del servicio
+        required: true
+      responses:
+        200:
+          description: Datos del servicio editado
+        401:
+          description: Autenticación inválida
+        404:
+          description: Servicio no encontrado
+        422:
+          description: Errores de validación
+      security:
+      - Authorization: []
+    delete:
+      tags:
+      - services
+      summary: Eliminar servicio
+      produces:
+      - application/json
+      parameters:
+      - name: serviceid
+        in: path
+        type: integer
+        description: ID del servicio
+        required: true
+      responses:
+        200:
+          description: Servicio eliminado
+        401:
+          description: Autenticación inválida
+        404:
+          description: Servicio no encontrado
+      security:
+      - Authorization: []
+
+securityDefinitions:
+  Authorization:
+    type: apiKey
+    name: Authorization
+    in: header
