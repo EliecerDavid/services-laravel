@@ -47,9 +47,10 @@ class PersonController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id)
     {
-        //
+        $person = Person::findOrFail($id);
+        return new PersonResource($person);
     }
 
     /**
