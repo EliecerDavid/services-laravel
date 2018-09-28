@@ -14,6 +14,15 @@ class CreatePersonTest extends TestCase
     /**
      * @test
      */
+    public function mostrar_error_de_autenticacion()
+    {
+        $response = $this->json('GET', '/api/people');
+        $response->assertStatus(401);
+    }
+
+    /**
+     * @test
+     */
     public function crear_persona()
     {
         $user = factory(User::class)->create();
@@ -37,6 +46,27 @@ class CreatePersonTest extends TestCase
                         'last_name'  => 'Pari Alhuay',
                     ],
                 ]);
+    }
+
+    /**
+     * @test
+     */
+    public function verificar_insercion_de_persona_en_la_base_de_datos()
+    {
+        $user = factory(User::class)->create();
+        $token = JWTAuth::fromUser($user);
+
+        $this
+            ->withHeader('Authorization', 'Bearer ' . $token)
+            ->json('POST', '/api/people', [
+                'first_name' => 'Eliecer David',
+                'last_name'  => 'Pari Alhuay',
+            ]);
+
+        $this->assertDatabaseHas('people', [
+            'first_name' => 'Eliecer David',
+            'last_name'  => 'Pari Alhuay',
+        ]);
     }
 
     /**

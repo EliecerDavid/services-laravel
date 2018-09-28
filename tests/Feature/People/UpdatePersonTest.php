@@ -15,6 +15,15 @@ class UpdatePersonTest extends TestCase
     /**
      * @test
      */
+    public function mostrar_error_de_autenticacion()
+    {
+        $response = $this->json('GET', '/api/people');
+        $response->assertStatus(401);
+    }
+
+    /**
+     * @test
+     */
     public function actualizar_datos_de_persona()
     {
         $user = factory(User::class)->create();
@@ -38,6 +47,30 @@ class UpdatePersonTest extends TestCase
                     'last_name'  => 'Pérez',
                 ],
             ]);
+    }
+
+    /**
+     * @test
+     */
+    public function verificar_los_cambios_realizados_en_persona_en_la_base_de_datos()
+    {
+        $user = factory(User::class)->create();
+        $token = JWTAuth::fromUser($user);
+
+        $person = factory(Person::class)->create();
+
+        $this
+            ->withHeader('Authorization', 'Bearer ' . $token)
+            ->json('PUT', '/api/people/' . $person->id, [
+                'first_name' => 'Juanito',
+                'last_name'  => 'Pérez',
+            ]);
+
+        $this->assertDatabaseHas('people', [
+            'id'         => $person->id,
+            'first_name' => 'Juanito',
+            'last_name'  => 'Pérez',
+        ]);
     }
 
     /**

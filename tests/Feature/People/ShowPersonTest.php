@@ -15,6 +15,15 @@ class ShowPersonTest extends TestCase
     /**
      * @test
      */
+    public function mostrar_error_de_autenticacion()
+    {
+        $response = $this->json('GET', '/api/people');
+        $response->assertStatus(401);
+    }
+
+    /**
+     * @test
+     */
     public function mostrar_datos_de_persona_por_su_id()
     {
         $user = factory(User::class)->create();
@@ -27,14 +36,14 @@ class ShowPersonTest extends TestCase
                         ->json('GET', '/api/people/' . $person->id);
 
         $response
-            ->assertStatus(200)
-            ->assertJson([
-               'data' => [
-                   'id'         => $person->id,
-                   'first_name' => $person->first_name,
-                   'last_name'  => $person->last_name,
-               ],
-            ]);
+                ->assertStatus(200)
+                ->assertJson([
+                   'data' => [
+                       'id'         => $person->id,
+                       'first_name' => $person->first_name,
+                       'last_name'  => $person->last_name,
+                   ],
+                ]);
     }
 
     /**
@@ -46,8 +55,8 @@ class ShowPersonTest extends TestCase
         $token = JWTAuth::fromUser($user);
 
         $response = $this
-            ->withHeader('Authorization', 'Bearer ' . $token)
-            ->json('GET', '/api/people/1');
+                        ->withHeader('Authorization', 'Bearer ' . $token)
+                        ->json('GET', '/api/people/1');
 
         $response->assertStatus(404);
     }

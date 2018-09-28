@@ -17,6 +17,15 @@ class ListPeopleTest extends TestCase
     /**
      * @test
      */
+    public function mostrar_error_de_autenticacion()
+    {
+        $response = $this->json('GET', '/api/people');
+        $response->assertStatus(401);
+    }
+
+    /**
+     * @test
+     */
     public function listado_de_personas()
     {
         $user = factory(User::class)->create();
@@ -40,14 +49,5 @@ class ListPeopleTest extends TestCase
                     ],
                 ])
                 ->assertJsonCount(3, 'data');
-    }
-
-    /**
-     * @test
-     */
-    public function error_401_por_usuario_no_autenticado()
-    {
-        $response = $this->json('GET', '/api/people');
-        $response->assertStatus(401);
     }
 }
