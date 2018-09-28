@@ -12,7 +12,7 @@ class PersonController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index()
     {
@@ -23,8 +23,8 @@ class PersonController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request $request
+     * @return \App\Http\Resources\PersonResource
      */
     public function store(Request $request)
     {
@@ -45,7 +45,7 @@ class PersonController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \App\Http\Resources\PersonResource
      */
     public function show(int $id)
     {
@@ -58,7 +58,7 @@ class PersonController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \App\Http\Resources\PersonResource
      */
     public function update(Request $request, int $id)
     {
@@ -84,8 +84,11 @@ class PersonController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
-        //
+        $person = Person::findOrFail($id);
+        $person->delete();
+
+        return response()->json([]);
     }
 }

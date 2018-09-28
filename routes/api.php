@@ -20,8 +20,5 @@ Route::group(['middleware' => 'guest:api'], function () {
 Route::group(['middleware' => 'auth:api'], function () {
     Route::delete('logout', 'Auth\LoginController@logout');
 
-    Route::get('people', 'API\PersonController@index');
-    Route::post('people', 'API\PersonController@store');
-    Route::get('people/{personid}', 'API\PersonController@show');
-    Route::put('people/{personid}', 'API\PersonController@update');
+    Route::resource('people', 'API\PersonController');
 });
