@@ -21,16 +21,6 @@ class PersonController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -38,7 +28,17 @@ class PersonController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'first_name' => 'required|string',
+            'last_name'  => 'required|string',
+        ]);
+
+        $person = Person::create([
+            'first_name' => $request->first_name,
+            'last_name'  => $request->last_name,
+        ]);
+
+        return new PersonResource($person);
     }
 
     /**

@@ -21,4 +21,5 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::delete('logout', 'Auth\LoginController@logout');
 
     Route::get('people', 'API\PersonController@index');
+    Route::post('people', 'API\PersonController@store');
 });
