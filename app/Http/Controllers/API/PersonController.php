@@ -54,26 +54,28 @@ class PersonController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id)
     {
-        //
+        $person = Person::findOrFail($id);
+
+        $this->validate($request, [
+            'first_name' => 'required|string',
+            'last_name'  => 'required|string',
+        ]);
+
+        $person->fill([
+            'first_name' => $request->first_name,
+            'last_name'  => $request->last_name,
+        ]);
+        $person->save();
+
+        return new PersonResource($person);
     }
 
     /**

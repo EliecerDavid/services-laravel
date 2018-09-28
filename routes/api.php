@@ -23,4 +23,5 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('people', 'API\PersonController@index');
     Route::post('people', 'API\PersonController@store');
     Route::get('people/{personid}', 'API\PersonController@show');
+    Route::put('people/{personid}', 'API\PersonController@update');
 });
