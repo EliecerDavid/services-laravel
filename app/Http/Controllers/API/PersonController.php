@@ -5,7 +5,9 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PersonResource;
 use App\Person;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class PersonController extends Controller
 {
@@ -14,7 +16,7 @@ class PersonController extends Controller
      *
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function index()
+    public function index(): AnonymousResourceCollection
     {
         $people = Person::all();
         return PersonResource::collection($people);
@@ -26,7 +28,7 @@ class PersonController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \App\Http\Resources\PersonResource
      */
-    public function store(Request $request)
+    public function store(Request $request): PersonResource
     {
         $this->validate($request, [
             'first_name' => 'required|string',
@@ -47,7 +49,7 @@ class PersonController extends Controller
      * @param  int  $id
      * @return \App\Http\Resources\PersonResource
      */
-    public function show(int $id)
+    public function show(int $id): PersonResource
     {
         $person = Person::findOrFail($id);
         return new PersonResource($person);
@@ -60,7 +62,7 @@ class PersonController extends Controller
      * @param  int  $id
      * @return \App\Http\Resources\PersonResource
      */
-    public function update(Request $request, int $id)
+    public function update(Request $request, int $id): PersonResource
     {
         $person = Person::findOrFail($id);
 
@@ -81,10 +83,10 @@ class PersonController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  int $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(int $id)
+    public function destroy(int $id): JsonResponse
     {
         $person = Person::findOrFail($id);
         $person->delete();
